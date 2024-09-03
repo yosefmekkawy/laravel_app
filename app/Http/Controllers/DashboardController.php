@@ -26,47 +26,9 @@ class DashboardController extends Controller
         return view('admin.edit_user', compact('user'));
 
     }
-//    public function update_user(Request $request, $id)
-//    {
-//        // Validate the request
-//        $validatedData = $request->validate([
-//            'username' => 'required|string|max:255',
-//            'email' => 'required|email|unique:users,email,' . $id,
-//            'password' => 'nullable|string|min:8|confirmed',
-//            'picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-//        ]);
-//
-//        $user = User::findOrFail($id);
-//
-//        // Update user details
-//        $user->username = $validatedData['username'];
-//        $user->email = $validatedData['email'];
-//
-//        if (!empty($validatedData['password'])) {
-//            $user->password = bcrypt($validatedData['password']);
-//        }
-//
-//        // Handle image upload
-//        if ($request->hasFile('picture')) {
-//            $image = $request->file('picture');
-//            $imageName = time() . '.' . $image->getClientOriginalExtension();
-//            $image->move(public_path('images'), $imageName);
-//
-//            // Save or update the image in the Images model
-//            $user->image()->updateOrCreate(
-//                ['imageable_id' => $user->id, 'imageable_type' => User::class],
-//                ['name' => $imageName]
-//            );
-//        }
-//
-//        // Save the user
-//        $user->save();
-//
-//        return redirect()->route('dashboard.edit.user', $user->id)->with('success', 'Updated successfully!');
-//    }
+
     public function update_user(Request $request, $id)
     {
-        // Validate the request
         $validatedData = $request->validate([
             'username' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $id,
@@ -76,7 +38,6 @@ class DashboardController extends Controller
 
         $user = User::findOrFail($id);
 
-        // Update user details
         $user->username = $validatedData['username'];
         $user->email = $validatedData['email'];
 
@@ -84,20 +45,17 @@ class DashboardController extends Controller
             $user->password = bcrypt($validatedData['password']);
         }
 
-        // Handle image upload
-        if ($request->hasFile('picture')) {
-            $image = $request->file('picture');
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('images'), $imageName);
 
-            // Save or update the image in the Images model
             $user->image()->updateOrCreate(
                 ['imageable_id' => $user->id, 'imageable_type' => User::class],
                 ['name' => $imageName]
             );
         }
 
-        // Save the user
         $user->save();
 
         return redirect()->route('dashboard.edit.user', $user->id)->with('success', 'Updated successfully!');
