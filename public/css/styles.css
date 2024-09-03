@@ -1,0 +1,13 @@
+/*body{*/
+/*    background-color: aquamarine;*/
+/*}*/
+
+.contact_us{
+    max-width: 500px;
+    margin: auto;
+}
+table tr td img{
+    height: 40px;
+    width: 40px;
+    object-fit: contain;
+}
